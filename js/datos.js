@@ -20,7 +20,7 @@ const PRODUCTOS = [
         nombre: 'Monitor 24"',
         descripcion: 'Monitor Full HD, 75Hz, panel IPS.',
         precio: 125000,
-        imagen: 'monitor.png',
+        imagen: 'monitor.jpg',
         categoria: 'Monitores',
     },
     {
@@ -36,7 +36,7 @@ const PRODUCTOS = [
         nombre: 'Auriculares',
         descripcion: 'Auriculares con micrófono y cancelación de ruido.',
         precio: 40000,
-        imagen: 'auriculares.png',
+        imagen: 'auriculares.jpg',
         categoria: 'Periféricos',
     },
     {

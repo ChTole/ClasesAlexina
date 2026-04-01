@@ -53,3 +53,9 @@ header {
     font-size: 1.2rem;
     font-weight: 600;
 }
+
+.card-img {
+    width: 100px;
+    background-color: white;
+    border-radius: 5px;
+}

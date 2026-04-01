@@ -67,7 +67,7 @@ function mostrarProductos(categoriaSeleccionada) {
     
             // Contenido de la tarjeta
             let imagen = crearEtiqueta('img', 'card-img', null);
-            imagen.src = p.imagen;
+            imagen.src = `${PRODUCTOS_URL}${p.imagen}`;
             imagen.alt = p.nombre;
     
             let nombre = crearEtiqueta('h3', 'card-title', p.nombre);

@@ -133,4 +133,5 @@ function mostrarCarrito() {
 function vaciarCarrito() {
     estado.carrito = [];
     guardarCarrito();
+    actualizarResumenCarrito();
 }
