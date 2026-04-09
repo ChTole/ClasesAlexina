@@ -127,7 +127,7 @@ function mostrarCarrito() {
 }
 
 // Quitar productos
-
+function quitarProducto() {}
 
 // Vaciar el carrito
 function vaciarCarrito() {
