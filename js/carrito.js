@@ -89,6 +89,13 @@ function mostrarCarrito() {
                 `${item.producto.nombre} | Cantidad: ${item.cantidad} | Subtotal: S${subtotal}`
             );
             let btnEliminar = crearEtiqueta('button', 'boton', '🗑️');
+            btnEliminar.addEventListener('click', () => {
+                quitarProducto(item.producto.id);
+                dialogCarrito.close();
+                dialogCarrito.remove();
+                mostrarCarrito();
+            });
+
             divItem.append(spanProducto, btnEliminar);
             dialogCarrito.append(divItem);
         });
@@ -127,7 +134,13 @@ function mostrarCarrito() {
 }
 
 // Quitar productos
-function quitarProducto() {}
+function quitarProducto(idProducto) {
+    console.log("Antes", estado.carrito)
+    estado.carrito = estado.carrito.filter(p => p.producto.id !== idProducto);
+    console.log("Después", estado.carrito)
+    guardarCarrito();
+    actualizarResumenCarrito();
+}
 
 // Vaciar el carrito
 function vaciarCarrito() {
