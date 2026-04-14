@@ -109,6 +109,13 @@ function mostrarCarrito() {
     let botonera = crearEtiqueta('div', 'botonera', null);
 
     let btnFinalizar = crearEtiqueta('button', 'boton', 'Finalizar compra');
+    btnFinalizar.addEventListener('click', () => {
+        dialogCarrito.close();
+        dialogCarrito.remove();
+        createCheckoutForm();
+    });
+
+
     let btnContinuar = crearEtiqueta('button', 'boton', 'Continuar comprando');
     btnContinuar.addEventListener('click', () => {
         dialogCarrito.close();
