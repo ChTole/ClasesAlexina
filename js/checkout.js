@@ -82,43 +82,114 @@ function createCheckoutForm() {
             label: "Fecha de Entrega",
             type: "date"
         },
+        {
+            id: "payment",
+            label: "Método de pago",
+            type: "options",
+            options: [
+                {
+                    value: "credit",
+                    label: "Tarjeta de crédito"
+                },
+                {
+                    value: "debit",
+                    label: "Tarjeta de débito"
+                },
+                {
+                    value: "transfer",
+                    label: "Transferencia"
+                }
+            ]
+        }
     ]
 
     // Versión escalada
     formFields.forEach(field => {
         let divForm = crearEtiqueta('div', 'formInput', null);
         let formLabel = crearEtiqueta('label', null, field.label);
-        formLabel.for = field.id;
+        formLabel.setAttribute('for', field.id);
     
-        let formInput = crearEtiqueta('input', null, null);
-        formInput.id = field.id;
-        formInput.name = field.id;
-        formInput.type = field.type;
+        // Declaración sin inicialización
+        let formInput;
+
+        if (field.type === "options" && field.options) {
+            // No es input, es select
+            formInput = crearEtiqueta('select', null, null); // inicialización
+            formInput.id = field.id;
+            formInput.name = field.id;
+
+            let firstOption = crearEtiqueta('option', null, "Seleccione una opción");
+            firstOption.selected = true;
+            firstOption.disabled = true;
+            formInput.append(firstOption);
+
+            field.options.forEach(op => {
+                let option = crearEtiqueta('option', null, op.label);
+                option.value = op.value;
+                formInput.append(option);
+            });
+        }
+        else {
+            // Es input
+            formInput = crearEtiqueta('input', null, null); // inicialización
+            formInput.id = field.id;
+            formInput.name = field.id;
+            formInput.type = field.type;
+        }
 
         let pError = crearEtiqueta('p', 'error', null);
         
-        formInput.addEventListener('input', () => {
-            if (formInput.value === '')
-                pError.textContent = 'Este campo es obligatorio.';
-            else
-                pError.textContent = '';
-        });
+        // formInput.addEventListener('input', () => {
+        //     if (formInput.value === '')
+        //         pError.textContent = 'Este campo es obligatorio.';
+        //     else
+        //         pError.textContent = '';
+        // });
     
         divForm.append(formLabel, formInput, pError);
 
         form.append(divForm);
     });
+
+    // Botonera
+    let divCmdButton = crearEtiqueta('div', 'cmdButton', null);
+
+    let btnSubmit = crearEtiqueta('button', 'btn', 'Confirmar');
+    btnSubmit.type = 'submit';
     
+    let btnCancel = crearEtiqueta('button', 'btn', 'Cancelar');
+    btnCancel.type = 'button';
+    btnCancel.addEventListener('click', () => {
+        dialogCheckout.close();
+        dialogCheckout.remove();
+    });
+    
+    divCmdButton.append(btnSubmit, btnCancel);
+    form.append(divCmdButton);
+
     dialogCheckout.append(form);
 
     app.append(dialogCheckout);
 
+    // El form ya pertenece al DOM
+    formInputsAll = document.querySelectorAll('.formInput');
+    formInputsAll.forEach(formCont => {
+        let input = formCont.querySelector('input');
+
+        if (!input)
+            input = formCont.querySelector('select');
+
+        let pError = formCont.querySelector('p.error');
+        
+        if (input.value === '')
+            pError.textContent = 'Este campo es obligatorio.';
+        else
+            pError.textContent = '';
+
+    });
+
     dialogCheckout.showModal();
 
-    "123abc"
-    "#$GSGA"
-    "1155228866"
-    "abc 123  L4pr1da 381 1757"
     // Versión XXL
     // let divFormName = crearEtiqueta('div', 'formInput', null);
     // let formLabelName = crearEtiqueta('label', null, 'Nombre y Apellido');
