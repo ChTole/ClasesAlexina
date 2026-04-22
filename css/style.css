@@ -60,3 +60,39 @@ header {
     border-radius: 5px;
 }
 
+/* Modales */
+dialog {
+    min-width: 50vw;
+    min-height: 40vh;
+    justify-self: center;
+    align-self: center;
+    border: none;
+    border-radius: 10px;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3px);
+}
+
+/* Formulario Checkout */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.formInput {
+    display: grid;
+    justify-content: center;
+    width: 100%;
+    grid-template-columns: 40% 40%;
+}
+
+/* Error */
+p.error {
+    margin: 10px 0;
+    text-align: center;
+    color: red;
+}

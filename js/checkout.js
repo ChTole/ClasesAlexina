@@ -121,6 +121,7 @@ function createCheckoutForm() {
             let firstOption = crearEtiqueta('option', null, "Seleccione una opción");
             firstOption.selected = true;
             firstOption.disabled = true;
+            firstOption.value = null;
             formInput.append(firstOption);
 
             field.options.forEach(op => {
@@ -165,27 +166,71 @@ function createCheckoutForm() {
     });
     
     divCmdButton.append(btnSubmit, btnCancel);
+
+    let title = crearEtiqueta('h3', 'formTitle', 'Finalizar compra');
+
     form.append(divCmdButton);
 
-    dialogCheckout.append(form);
+    dialogCheckout.append(title, form);
 
     app.append(dialogCheckout);
 
+    // ********************************************
     // El form ya pertenece al DOM
+    // ********************************************
+    // Primera validación de inputs
     formInputsAll = document.querySelectorAll('.formInput');
     formInputsAll.forEach(formCont => {
         let input = formCont.querySelector('input');
-
-        if (!input)
-            input = formCont.querySelector('select');
-
         let pError = formCont.querySelector('p.error');
-        
-        if (input.value === '')
-            pError.textContent = 'Este campo es obligatorio.';
-        else
-            pError.textContent = '';
 
+        if (!input) {
+            // Si no es input => select
+            input = formCont.querySelector('select');
+            // La primera aparición
+            if (input.value == "null") {
+                pError.textContent = 'Este campo es obligatorio.';
+                btnSubmit.disabled = true;
+            }
+
+            // Escuchar el ingreso
+            input.addEventListener('change', () => {
+                if (input.value == "null") {
+                    pError.textContent = 'Este campo es obligatorio.';
+                    btnSubmit.disabled = true;
+                }
+                else {
+                    pError.textContent = '';
+                    btnSubmit.disabled = false;
+                }
+            });
+        }
+        else {
+            // Es input
+            // La primera aparición
+            if (input.value === '') {
+                pError.textContent = 'Este campo es obligatorio.';
+                btnSubmit.disabled = true;
+            }
+
+            // Escuchar el ingreso
+            input.addEventListener('input', () => {
+                if (input.value === '') {
+                    pError.textContent = 'Este campo es obligatorio.';
+                    btnSubmit.disabled = true;
+                }
+                else {
+                    pError.textContent = '';
+                    btnSubmit.disabled = false;
+                }
+            });
+        }
+    });
+
+    // Envío del formulario
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        onSubmit();
     });
 
     dialogCheckout.showModal();
@@ -207,6 +252,7 @@ function createCheckoutForm() {
 
 function onSubmit() {
     // Validar datos
+    console.log("VALIDAR DATOS!!!!")
 }
 
 function sendData() {
