@@ -1,48 +1,50 @@
-// <form id="checkout">
-//     <div class="formInput">
-//         <label for="name">Nombre y Apellido</label>
-//         <input id="name" name="fullName" type="text">
-//         <p class="error"></p>
-//     </div>
-//     <div class="formInput">
-//         <label for="phone">Teléfono</label>
-//         <input id="phone" name="phone" type="text">
-//         <p class="error"></p>
-//     </div>
-//     <div class="formInput">
-//         <label for="email">Correo</label>
-//         <input id="email" name="email" type="text">
-//         <p class="error"></p>
-//     </div>
-//     <div class="formInput">
-//         <label for="location">Lugar de entrega</label>
-//         <input id="location" name="location" type="text">
-//         <p class="error"></p>
-//     </div>
-//     <div class="formInput">
-//         <label for="deliveryDate">Fecha de entrega</label>
-//         <input id="deliveryDate" name="deliveryDate" type="date">
-//         <p class="error"></p>
-//     </div>
-//     <div class="formInput">
-//         <label for="payment">Método de pago</label>
-//         <select name="payment" id="payment">
-//             <option selected disabled>Seleccione</option>
-//             <option value="credit">Tarjeta de Crédito</option>
-//             <option value="debit">Tarjeta de Débito</option>
-//             <option value="transfer">Transferencia</option>
-//         </select>
-//         <p class="error"></p>
-//     </div>
-//     <div class="cmdButton">
-//         <button type="submit">
-//             Confirmar
-//         </button>
-//         <button type="button" id="cancelCheckout">
-//             Cancelar
-//         </button>
-//     </div>
-// </form>
+const FORM_FIELDS = [
+    {
+        id: "fullName",
+        label: "Nombre y Apellido",
+        type: "text"
+    },
+    {
+        id: "email",
+        label: "Correo",
+        type: "email"
+    },
+    {
+        id: "phone",
+        label: "Teléfono",
+        type: "text"
+    },
+    {
+        id: "location",
+        label: "Lugar de Entrega",
+        type: "text"
+    },
+    {
+        id: "deliveryDate",
+        label: "Fecha de Entrega",
+        type: "date"
+    },
+    {
+        id: "payment",
+        label: "Método de pago",
+        type: "options",
+        options: [
+            {
+                value: "credit",
+                label: "Tarjeta de crédito"
+            },
+            {
+                value: "debit",
+                label: "Tarjeta de débito"
+            },
+            {
+                value: "transfer",
+                label: "Transferencia"
+            }
+        ]
+    }
+]
+
 
 function createCheckoutForm() {
     // Dibujar el form en el DOM
@@ -56,55 +58,9 @@ function createCheckoutForm() {
     // Formulario
     let form = crearEtiqueta('form', 'checkoutForm', null);
 
-    const formFields = [
-        {
-            id: "fullName",
-            label: "Nombre y Apellido",
-            type: "text"
-        },
-        {
-            id: "email",
-            label: "Correo",
-            type: "email"
-        },
-        {
-            id: "phone",
-            label: "Teléfono",
-            type: "text"
-        },
-        {
-            id: "location",
-            label: "Lugar de Entrega",
-            type: "text"
-        },
-        {
-            id: "deliveryDate",
-            label: "Fecha de Entrega",
-            type: "date"
-        },
-        {
-            id: "payment",
-            label: "Método de pago",
-            type: "options",
-            options: [
-                {
-                    value: "credit",
-                    label: "Tarjeta de crédito"
-                },
-                {
-                    value: "debit",
-                    label: "Tarjeta de débito"
-                },
-                {
-                    value: "transfer",
-                    label: "Transferencia"
-                }
-            ]
-        }
-    ]
 
     // Versión escalada
-    formFields.forEach(field => {
+    FORM_FIELDS.forEach(field => {
         let divForm = crearEtiqueta('div', 'formInput', null);
         let formLabel = crearEtiqueta('label', null, field.label);
         formLabel.setAttribute('for', field.id);
@@ -138,15 +94,8 @@ function createCheckoutForm() {
             formInput.type = field.type;
         }
 
-        let pError = crearEtiqueta('p', 'error', null);
-        
-        // formInput.addEventListener('input', () => {
-        //     if (formInput.value === '')
-        //         pError.textContent = 'Este campo es obligatorio.';
-        //     else
-        //         pError.textContent = '';
-        // });
-    
+        let pError = crearEtiqueta('p', 'error', null); 
+         
         divForm.append(formLabel, formInput, pError);
 
         form.append(divForm);
@@ -166,12 +115,12 @@ function createCheckoutForm() {
     });
     
     divCmdButton.append(btnSubmit, btnCancel);
-
-    let title = crearEtiqueta('h3', 'formTitle', 'Finalizar compra');
-
     form.append(divCmdButton);
 
-    dialogCheckout.append(title, form);
+    let title = crearEtiqueta('h3', 'formTitle', 'Finalizar compra');
+    let errorForm = crearEtiqueta('p', 'errorForm', null);
+
+    dialogCheckout.append(title, form, errorForm);
 
     app.append(dialogCheckout);
 
@@ -190,18 +139,15 @@ function createCheckoutForm() {
             // La primera aparición
             if (input.value == "null") {
                 pError.textContent = 'Este campo es obligatorio.';
-                btnSubmit.disabled = true;
             }
-
+ 
             // Escuchar el ingreso
             input.addEventListener('change', () => {
                 if (input.value == "null") {
                     pError.textContent = 'Este campo es obligatorio.';
-                    btnSubmit.disabled = true;
                 }
                 else {
                     pError.textContent = '';
-                    btnSubmit.disabled = false;
                 }
             });
         }
@@ -210,18 +156,15 @@ function createCheckoutForm() {
             // La primera aparición
             if (input.value === '') {
                 pError.textContent = 'Este campo es obligatorio.';
-                btnSubmit.disabled = true;
             }
-
+ 
             // Escuchar el ingreso
             input.addEventListener('input', () => {
                 if (input.value === '') {
                     pError.textContent = 'Este campo es obligatorio.';
-                    btnSubmit.disabled = true;
                 }
                 else {
                     pError.textContent = '';
-                    btnSubmit.disabled = false;
                 }
             });
         }
@@ -230,31 +173,105 @@ function createCheckoutForm() {
     // Envío del formulario
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        onSubmit();
+        
+        onSubmit(form);
     });
 
     dialogCheckout.showModal();
-
-    // Versión XXL
-    // let divFormName = crearEtiqueta('div', 'formInput', null);
-    // let formLabelName = crearEtiqueta('label', null, 'Nombre y Apellido');
-    // formLabelName.for = 'name';
-
-    // let formInputName = crearEtiqueta('input', null, null);
-    // formInputName.id = 'name';
-    // formInputName.name = 'name';
-    // formInputName.type = 'text';
-
-    // let pErrorName = crearEtiqueta('p', 'error', null);
-
-    // divFormName.append(formLabelName, formInputName, pErrorName);
 }
 
-function onSubmit() {
+function onSubmit(form) {
+    // Creación de obj FormData (objeto nativo)
+    let formSent = new FormData(form)
+
+    // Mensaje de error en form
+    let pErrorForm = document.querySelector('p.errorForm');
+    pErrorForm.textContent = '';
+    
     // Validar datos
-    console.log("VALIDAR DATOS!!!!")
+    // console.log(formSent.get('fullName')) // un campo a partir del "name"
+    for (let f of formSent.values()) {
+        // console.log(f); // valores del form
+        if (f === '' || f === "null") {
+            pErrorForm.textContent = "Se detectaron errores en el formulario."
+            return;
+        }
+    }
+
+    // Caso "feliz" -> datos validados correctamente
+    // Captura del modal del form, cierre y eliminación del DOM
+    let dialogCheckout = document.querySelector('.checkoutDialog');
+    dialogCheckout.close();
+    dialogCheckout.remove();
+
+    let dataForm = [];
+    
+    formSent.entries().forEach(d => {dataForm.push(d)});
+
+    sendData(dataForm);
 }
 
-function sendData() {
+function sendData(validatedFormEntries) {
     // Envío de datos validados correctamente
+    let dataUser = {};
+
+    for (let entrie of validatedFormEntries) {
+        dataUser[entrie[0]] = entrie[1];
+    }
+
+    // Capturar la app
+    let app = document.querySelector('#app');
+    // Modal
+    let dialogPurchase = crearEtiqueta('dialog', null, null);
+    // Contenedor dentro del modal
+    let container = crearEtiqueta('div', 'purchase', null);
+
+    let subtitle1 = crearEtiqueta('h3', 'purchaseTitle', 'Datos comprador');
+    container.append(subtitle1);
+
+    for (let f of FORM_FIELDS) {
+        let pField = crearEtiqueta(
+            'p',
+            'purchaseData',
+            `${f.label}: ${dataUser[f.id]}`
+        );
+        container.append(pField);
+    }
+
+    let subtitle2 = crearEtiqueta('h3', 'purchaseTitle', 'Artículos');
+    container.append(subtitle2);
+
+    let total = 0;
+
+    // Mostrar de nuevo el carrito y luego vaciar
+    estado.carrito.forEach(item => {
+        let divItem = crearEtiqueta('div', 'itemCarrito', null);
+
+        let subtotal = item.cantidad * item.producto.precio;
+        total += subtotal;
+
+        let spanProducto = crearEtiqueta(
+            'span', 
+            'itemCarrito', 
+            `${item.producto.nombre} | Cantidad: ${item.cantidad} | Subtotal: S${subtotal}`
+        );
+
+        divItem.append(spanProducto);
+        container.append(divItem);
+    });
+
+    vaciarCarrito();
+
+    let pTotal = crearEtiqueta(
+        'p', 
+        'mount',
+        `Total a pagar: $${total}.-`
+    );
+    container.append(pTotal);
+
+    dialogPurchase.append(container);
+    app.append(dialogPurchase);
+
+    dialogPurchase.showModal();
+
 }

@@ -91,7 +91,7 @@ form {
 }
 
 /* Error */
-p.error {
+p.error, p.errorForm {
     margin: 10px 0;
     text-align: center;
     color: red;
