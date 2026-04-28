@@ -9,12 +9,8 @@ let temporizador;
 function mostrarOferta() {
     // Capturar el contenedor
     let contenedor = document.querySelector('#ofertasBanner');
-    // <div id="ofertasBanner"></div>
 
     if (contenedor.firstChild) {
-        // <div id="ofertasBanner">
-        // <p>OFERTA ANTERIOR</p>
-        // </div>
         contenedor.firstChild.remove();
         clearTimeout(temporizador);
     }

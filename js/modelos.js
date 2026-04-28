@@ -13,16 +13,3 @@ function ItemCarrito(cantidad, producto) {
     this.cantidad = cantidad;
     this.producto = producto;
 }
-
-// let p1 = new Producto(
-//     15,
-//     "Disco SSD",
-//     "1Tb",
-//     200000,
-//     "img/ssd.jpg",
-//     "Almacenamiento"
-// );
-
-// console.log(p1);
-// console.log(typeof p1);
-// console.log(p1 instanceof Producto);

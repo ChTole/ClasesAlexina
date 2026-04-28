@@ -11,12 +11,6 @@ function crearEtiqueta(etiqueta, clase, texto) {
     return nuevaEtiqueta;
 }
 
-// let nombreProd = document.createElement('p'):
-// nombreProd.className = 'producto';
-// nombreProd.textContent = 'Monitor 24"';
-
-// let nombreProd = crearEtiqueta('p', 'producto', "Monitor 24"');
-
 function limpiarVista() {
     let app = document.querySelector('#app');
 

@@ -25,7 +25,7 @@ function actualizarResumenCarrito() {
 
     let spanCantidad = crearEtiqueta('span', null, `${cantProductos} productos -`);
     let spanTotal = crearEtiqueta('span', null, `$${totalCompra} a pagar.`);
-    let btnVerCarrito = crearEtiqueta('button', 'boton', 'Ver carrito');
+    let btnVerCarrito = crearEtiqueta('button', 'btn', 'Ver carrito');
     btnVerCarrito.addEventListener('click', () => {
         mostrarCarrito();
     });
@@ -88,7 +88,7 @@ function mostrarCarrito() {
                 'itemCarrito', 
                 `${item.producto.nombre} | Cantidad: ${item.cantidad} | Subtotal: S${subtotal}`
             );
-            let btnEliminar = crearEtiqueta('button', 'boton', '🗑️');
+            let btnEliminar = crearEtiqueta('button', 'btn', '🗑️');
             btnEliminar.addEventListener('click', () => {
                 quitarProducto(item.producto.id);
                 dialogCarrito.close();
@@ -106,9 +106,9 @@ function mostrarCarrito() {
     }
 
     // Botonera: "Finalizar" | "Continuar comprando" | "Vaciar el carrito"
-    let botonera = crearEtiqueta('div', 'botonera', null);
+    let botonera = crearEtiqueta('div', 'cmdButton', null);
 
-    let btnFinalizar = crearEtiqueta('button', 'boton', 'Finalizar compra');
+    let btnFinalizar = crearEtiqueta('button', 'btn', 'Finalizar compra');
     btnFinalizar.addEventListener('click', () => {
         dialogCarrito.close();
         dialogCarrito.remove();
@@ -116,13 +116,13 @@ function mostrarCarrito() {
     });
 
 
-    let btnContinuar = crearEtiqueta('button', 'boton', 'Continuar comprando');
+    let btnContinuar = crearEtiqueta('button', 'btn', 'Continuar comprando');
     btnContinuar.addEventListener('click', () => {
         dialogCarrito.close();
         dialogCarrito.remove();
     });
 
-    let btnVaciar = crearEtiqueta('button', 'boton', 'Vaciar carrito');
+    let btnVaciar = crearEtiqueta('button', 'btn', 'Vaciar carrito');
     btnVaciar.addEventListener('click', () => {
         vaciarCarrito();
         dialogCarrito.close();

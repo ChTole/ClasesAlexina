@@ -105,15 +105,6 @@ function mostrarProductos(categoriaSeleccionada) {
 
             divProductos.append(divTarjeta);
         }
-
-        // Agrego al contenedor de productos
-        // if (!categoriaSeleccionada) {
-        //     divProductos.append(divTarjeta);
-        // }    
-        // // Filtro separado
-        // else if (p.categoria === categoriaSeleccionada) {
-        //     divProductos.append(divTarjeta);
-        // }
     });
 
     // Agrego a la vista
